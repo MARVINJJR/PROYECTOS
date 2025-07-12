@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mensaje Especial</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffccf6;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: rgb(0, 0, 0);
+    }
+
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background-color: rgb(255, 0, 157);
+      transform: rotate(45deg);
+      top: -20px;
+      border-radius: 50%;
+      animation: fall linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: rgb(255, 0, 221);
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -20px;
+        opacity: 1;
+      }
+      100% {
+        top: 100vh;
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  function pedirNombre() {
+    let nombre = prompt("¿Cómo te llamas?");
+
+    if (nombre === null) {
+      // Si el usuario cierra el prompt
+      pedirNombre();
+    } else if (nombre.trim().toLowerCase() === "allison") {
+      mostrarMensaje();
+      crearCorazones();
+    } else {
+      alert("Nombre inválido");
+      pedirNombre();
+    }
+  }
+
+  function mostrarMensaje() {
+    const body = document.body;
+    body.innerHTML = '<h1>TE QUIERO ALLISON ❤️</h1>';
+    body.style.justifyContent = 'center';
+    body.style.alignItems = 'center';
+  }
+
+  function crearCorazones() {
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+      heart.style.width = heart.style.height = (10 + Math.random() * 15) + 'px';
+      heart.style.backgroundColor = ['red', '#ff69b4', '#ff1493'][Math.floor(Math.random() * 3)];
+      document.body.appendChild(heart);
+
+      // Eliminar corazón después de la animación
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }, 300);
+  }
+
+  // Iniciar al cargar la página
+  window.onload = pedirNombre;
+</script>
+
+</body>
+</html>
